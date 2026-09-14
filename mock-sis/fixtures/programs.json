@@ -1,0 +1,14 @@
+[
+  {
+    "id": "BS-CS-2024",
+    "name": "BS Computer Science",
+    "degreeType": "Bachelor of Science",
+    "department": "Computer Science",
+    "catalogYear": "2024-2025",
+    "totalUnitsRequired": 120,
+    "minimumGpa": 2.0,
+    "coreCourseIds": ["CS101", "CS201", "CS331", "CS356", "MATH100", "MATH200", "MATH231", "ENG101"],
+    "electiveCourseIds": ["CS250", "CS301", "CS350", "PHY101"],
+    "minElectiveUnits": 9
+  }
+]

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind preflight defaults these to a bare space (sometimes minified away). Chrome marks that as
+   invalid; percentages match default color-stop placement when a position is omitted. */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    --tw-gradient-from-position: 0%;
+    --tw-gradient-via-position: 50%;
+    --tw-gradient-to-position: 100%;
+  }
+}
+
+/* Full-page shell: opaque gradient (same palette as from-slate-950 / via-slate-900 / to-violet-950). */
+@layer utilities {
+  .bg-app-shell {
+    background-image: linear-gradient(to bottom right, #020617 0%, #0f172a 50%, #2e1065 100%);
+  }
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "sisId": "M00412771",
+    "name": "Jordan Rivera",
+    "programId": "BS-CS-2024",
+    "classStanding": "Junior",
+    "courseHistory": [
+      { "courseCode": "CS101", "term": "2024FA", "status": "completed", "grade": "A-", "gradePoints": 3.7 },
+      { "courseCode": "MATH100", "term": "2024FA", "status": "completed", "grade": "A", "gradePoints": 4.0 },
+      { "courseCode": "ENG101", "term": "2024FA", "status": "completed", "grade": "B+", "gradePoints": 3.3 },
+      { "courseCode": "CS201", "term": "2025SP", "status": "completed", "grade": "B+", "gradePoints": 3.3 },
+      { "courseCode": "MATH200", "term": "2025SP", "status": "completed", "grade": "A-", "gradePoints": 3.7 },
+      { "courseCode": "CS331", "term": "2025FA", "status": "in_progress" },
+      { "courseCode": "MATH231", "term": "2025FA", "status": "in_progress" }
+    ]
+  },
+  {
+    "sisId": "M00298841",
+    "name": "Avery Chen",
+    "programId": "BS-CS-2024",
+    "classStanding": "Sophomore",
+    "courseHistory": [
+      { "courseCode": "CS101", "term": "2025SP", "status": "completed", "grade": "B", "gradePoints": 3.0 },
+      { "courseCode": "ENG101", "term": "2025SP", "status": "completed", "grade": "A-", "gradePoints": 3.7 },
+      { "courseCode": "MATH100", "term": "2025SP", "status": "completed", "grade": "B+", "gradePoints": 3.3 },
+      { "courseCode": "CS201", "term": "2025FA", "status": "in_progress" }
+    ]
+  }
+]

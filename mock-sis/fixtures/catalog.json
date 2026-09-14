@@ -1,0 +1,122 @@
+[
+  {
+    "id": "CS101",
+    "name": "Introduction to Computer Science",
+    "units": 3,
+    "level": "Core",
+    "department": "Computer Science",
+    "description": "Fundamental concepts of computer science including programming basics, algorithms, and problem-solving.",
+    "prerequisites": [],
+    "topics": ["programming", "algorithms", "problem-solving"]
+  },
+  {
+    "id": "CS201",
+    "name": "Data Structures and Algorithms",
+    "units": 4,
+    "level": "Core",
+    "department": "Computer Science",
+    "description": "In-depth study of fundamental data structures and algorithms, and analysis of complexity.",
+    "prerequisites": ["CS101"],
+    "topics": ["data structures", "algorithms", "complexity analysis"]
+  },
+  {
+    "id": "CS250",
+    "name": "Database Systems",
+    "units": 3,
+    "level": "Elective",
+    "department": "Computer Science",
+    "description": "Database design, SQL, normalization, and transaction management.",
+    "prerequisites": ["CS201"],
+    "topics": ["databases", "SQL", "data management"]
+  },
+  {
+    "id": "CS301",
+    "name": "Machine Learning",
+    "units": 3,
+    "level": "Elective",
+    "department": "Computer Science",
+    "description": "Introduction to machine learning algorithms, supervised and unsupervised learning, neural networks.",
+    "prerequisites": ["CS201", "MATH200"],
+    "topics": ["machine learning", "neural networks", "AI"]
+  },
+  {
+    "id": "CS331",
+    "name": "Computer Networks",
+    "units": 3,
+    "level": "Core",
+    "department": "Computer Science",
+    "description": "Network architectures, protocols, routing, and distributed systems fundamentals.",
+    "prerequisites": ["CS201"],
+    "topics": ["networking", "systems", "distributed systems"]
+  },
+  {
+    "id": "CS350",
+    "name": "Web Development",
+    "units": 3,
+    "level": "Elective",
+    "department": "Computer Science",
+    "description": "Full-stack web development including HTML, CSS, JavaScript, and modern frameworks.",
+    "prerequisites": ["CS101"],
+    "topics": ["web development", "frontend", "backend"]
+  },
+  {
+    "id": "CS356",
+    "name": "Software Engineering",
+    "units": 3,
+    "level": "Core",
+    "department": "Computer Science",
+    "description": "Software design principles, team development practices, testing, and large-system architecture.",
+    "prerequisites": ["CS201", "CS331"],
+    "topics": ["software engineering", "systems design", "testing"]
+  },
+  {
+    "id": "MATH100",
+    "name": "Calculus I",
+    "units": 4,
+    "level": "Core",
+    "department": "Mathematics",
+    "description": "Limits, derivatives, and integrals of single-variable functions.",
+    "prerequisites": [],
+    "topics": ["calculus", "mathematics"]
+  },
+  {
+    "id": "MATH200",
+    "name": "Linear Algebra",
+    "units": 3,
+    "level": "Core",
+    "department": "Mathematics",
+    "description": "Vectors, matrices, eigenvalues, and applications.",
+    "prerequisites": ["MATH100"],
+    "topics": ["linear algebra", "mathematics"]
+  },
+  {
+    "id": "MATH231",
+    "name": "Probability & Statistics",
+    "units": 3,
+    "level": "Core",
+    "department": "Mathematics",
+    "description": "Probability theory, random variables, distributions, and statistical inference.",
+    "prerequisites": ["MATH100"],
+    "topics": ["statistics", "probability", "mathematics"]
+  },
+  {
+    "id": "ENG101",
+    "name": "English Composition",
+    "units": 3,
+    "level": "Core",
+    "department": "English",
+    "description": "Academic writing, research, and critical analysis.",
+    "prerequisites": [],
+    "topics": ["writing", "communication"]
+  },
+  {
+    "id": "PHY101",
+    "name": "Physics I",
+    "units": 4,
+    "level": "Elective",
+    "department": "Physics",
+    "description": "Mechanics, thermodynamics, and waves.",
+    "prerequisites": ["MATH100"],
+    "topics": ["physics", "mechanics"]
+  }
+]
