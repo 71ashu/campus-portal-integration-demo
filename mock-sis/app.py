@@ -292,6 +292,7 @@ REGISTRAR_PAGE = """
       {% endfor %}
     </table>
 
+    {% if postable_courses %}
     <h3>Post a final grade</h3>
     <form method="post" action="{{ url_for('registrar_post_grade', sis_id=student.sisId) }}">
       <select name="courseCode" required>
@@ -306,8 +307,21 @@ REGISTRAR_PAGE = """
       </select>
       <button type="submit">Post grade &amp; notify advisor</button>
     </form>
+    {% else %}
+    <p class="muted">No in-progress courses left to grade for this student.</p>
+    {% endif %}
   </div>
   {% endif %}
+
+  <div class="card">
+    <p class="muted" style="margin-bottom: 10px;">
+      This is a public demo — anyone with the link can post grades here. Reset
+      everything back to the seeded starting state at any time:
+    </p>
+    <form method="post" action="{{ url_for('registrar_reset') }}" onsubmit="return confirm('Reset all demo data back to the seeded starting state?');">
+      <button type="submit" style="background:#991b1b;">Reset demo data</button>
+    </form>
+  </div>
 </body>
 </html>
 """

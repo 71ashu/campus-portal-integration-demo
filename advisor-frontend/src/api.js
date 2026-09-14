@@ -3,7 +3,11 @@
  * Uses fetch with credentials for session-based auth.
  */
 
-const API_BASE = '/api';
+// In local dev, Vite proxies same-origin '/api' to the backend (vite.config.js),
+// so no env var is needed. In production the frontend (Vercel) and backend
+// (Render) are different origins — set VITE_API_BASE to the backend's full
+// URL (e.g. https://campus-advisor-backend.onrender.com/api) at build time.
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 async function request(endpoint, options = {}) {
   const res = await fetch(`${API_BASE}${endpoint}`, {

@@ -1,0 +1,44 @@
+# Render Blueprint — deploys both Flask services in one click from the
+# Render dashboard (New > Blueprint > pick this repo).
+#
+# The two services need each other's public URL (mock-sis needs the
+# advisor's webhook URL; the advisor needs mock-sis's base URL), which
+# Render can't know until both exist — so those two env vars are left
+# `sync: false` (set manually in the dashboard) rather than wired
+# automatically. See DEPLOY.md for the exact steps and order.
+services:
+  - type: web
+    name: campus-mock-sis
+    runtime: python
+    plan: free
+    rootDir: mock-sis
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: ADVISOR_WEBHOOK_URL
+        sync: false # https://<campus-advisor-backend>.onrender.com/api/webhooks/sis/grade-posted
+      - key: SIS_WEBHOOK_TOKEN
+        sync: false # optional; must match the advisor service's SIS_WEBHOOK_TOKEN if set
+
+  - type: web
+    name: campus-advisor-backend
+    runtime: python
+    plan: free
+    rootDir: advisor-backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SIS_PROGRAM_ID
+        value: BS-CS-2024
+      - key: SIS_BASE_URL
+        sync: false # https://<campus-mock-sis>.onrender.com
+      - key: SIS_WEBHOOK_TOKEN
+        sync: false # optional; must match campus-mock-sis's SIS_WEBHOOK_TOKEN if set
+      - key: FRONTEND_URL
+        sync: false # https://<your-vercel-project>.vercel.app — required for CORS
+      - key: OPENAI_API_KEY
+        sync: false # optional; falls back to template advisory messages without it

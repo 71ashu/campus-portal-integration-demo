@@ -10,6 +10,7 @@ login. Auth is a mock campus SSO (POST /api/auth/sso with just a campus ID —
 no password), and a webhook lets the SIS push updates when a registrar posts
 a grade.
 """
+import os
 from datetime import datetime
 
 from flask import Flask, jsonify, request, session
@@ -376,7 +377,12 @@ def bootstrap():
         seed_synthetic.run_if_needed()
 
 
+# Runs at import time (not just under `python app.py`) so a WSGI server like
+# gunicorn — which imports this module and never executes the __main__ block
+# below — still creates tables, syncs the catalog, and seeds background
+# students before serving its first request.
+bootstrap()
+
 if __name__ == '__main__':
-    bootstrap()
     debug = Config.FLASK_ENV != 'production'
-    app.run(debug=debug, port=5000)
+    app.run(debug=debug, port=int(os.getenv('PORT', 5000)))

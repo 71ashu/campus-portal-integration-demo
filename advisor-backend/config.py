@@ -21,19 +21,24 @@ class Config:
         'DATABASE_URL', f"sqlite:///{os.path.join(BASE_DIR, 'advisor.db')}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SESSION_COOKIE_SAMESITE = 'Lax'
     SESSION_COOKIE_HTTPONLY = True
     PERMANENT_SESSION_LIFETIME = timedelta(days=30)
+    # In production the frontend (Vercel) and this API (Render) are different
+    # sites, so the session cookie needs SameSite=None + Secure to survive a
+    # cross-site fetch with credentials — the local dev setup is same-site
+    # (Vite proxies /api to this server) and doesn't need either.
+    SESSION_COOKIE_SAMESITE = 'None' if FLASK_ENV == 'production' else 'Lax'
+    SESSION_COOKIE_SECURE = FLASK_ENV == 'production'
 
     FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5173').rstrip('/')
 
     # --- Mock SIS integration ---
     SIS_BASE_URL = os.getenv('SIS_BASE_URL', 'http://localhost:5050').rstrip('/')
     SIS_PROGRAM_ID = os.getenv('SIS_PROGRAM_ID', 'BS-CS-2024')
-    # Shared secret the mock SIS must present when it calls our webhook, and
-    # that our own /api/auth/sso trusts as a stand-in for a real SSO handshake.
-    # Left empty by default so the demo runs unconfigured; set it to anything
-    # non-empty to require the header on both sides.
+    # Shared secret the mock SIS must present on the grade-posted webhook.
+    # Left empty by default so the local demo runs unconfigured; set the same
+    # value here and in mock-sis's SIS_WEBHOOK_TOKEN once this is deployed
+    # somewhere the webhook URL is publicly reachable.
     SIS_WEBHOOK_TOKEN = os.getenv('SIS_WEBHOOK_TOKEN', '')
 
     _dev_origins = ['http://localhost:5173', 'http://127.0.0.1:5173']
