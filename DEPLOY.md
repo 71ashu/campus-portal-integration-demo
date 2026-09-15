@@ -37,11 +37,22 @@ by connecting to a GitHub repo.
 
 **Free-tier note:** Render's free web services spin down after 15 minutes of
 inactivity and take 30–60 seconds to wake up on the next request. The first
-load of a shared demo link may look like it's hanging — it isn't. This also
-affects the registrar's grade-posted webhook: if `campus-advisor-backend` is
-asleep, posting a grade in the Registrar console can take up to ~60s to show
-"Advisor synced ✅" while it wakes up. Visiting the portal URL once first
-(to wake the backend) before doing a registrar demo avoids the wait.
+load of a shared demo link may look like it's hanging — it isn't.
+
+**The webhook can be flaky on Render's free tier — use "Refresh from SIS" as
+the reliable path.** In testing against the actual deployed services, the
+registrar's grade-posted webhook (`campus-mock-sis` → `campus-advisor-backend`)
+intermittently got an infrastructure-level 5xx from Render even with a
+generous timeout and a retry — this looks like a Render free-tier quirk on
+service-to-service calls, not an application bug (a direct call to the exact
+same endpoint immediately after always succeeded). **This doesn't break the
+demo**: the portal's "Refresh from SIS" button calls `/api/sync` directly
+from the browser to the advisor backend — a completely separate path from the
+webhook — and pulls the same fresh data reliably. If you're recording a demo
+and want the automatic "no click needed" version to work, warm up both
+services first (visit the portal, then the registrar console) so neither is
+asleep when you post a grade; otherwise, plan to click "Refresh from SIS"
+rather than rely on the automatic push.
 
 ## 3. Deploy the frontend on Vercel
 

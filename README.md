@@ -143,6 +143,11 @@ program's actual "max 6 units of EMGT electives" rule.
    before and after step 4. The only thing that changed was the student's record in
    the SIS.
 
+> On the free-tier deployment, step 3's webhook can occasionally fail with a
+> Render infrastructure hiccup rather than reach the advisor at all — see
+> [`DEPLOY.md`](DEPLOY.md#5-verify-the-live-demo) for why, and why clicking
+> "Refresh from SIS" is the reliable version of step 4 regardless.
+
 ## What's deliberately out of scope
 
 Named here rather than silently skipped — see
