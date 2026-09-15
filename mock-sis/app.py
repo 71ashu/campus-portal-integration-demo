@@ -17,6 +17,7 @@ webhook back to the advisor so its data stays in sync without a manual
 import json
 import os
 import threading
+import time
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -223,21 +224,30 @@ def _notify_advisor(sis_id):
 
     Timeout is generous (not the usual few seconds) because on a free-tier
     host (Render, etc.) the advisor service may be asleep after 15 minutes of
-    inactivity and take 30-60s to wake up on this very request. A short
-    timeout here would report "failed" even though the request completes and
-    the sync actually lands moments later — that mismatch is exactly what
-    happened during testing.
+    inactivity and take 30-60s to wake up on this very request. Confirmed live:
+    the very first request to a sleeping Render service can come back with an
+    infrastructure-level 5xx while the container is still booting, even well
+    within a generous timeout — a plain long timeout doesn't fix that, only a
+    retry does. One retry after a short pause is enough in practice.
     """
     headers = {"Content-Type": "application/json"}
     if SIS_WEBHOOK_TOKEN:
         headers["X-Webhook-Token"] = SIS_WEBHOOK_TOKEN
-    try:
-        resp = requests.post(
-            ADVISOR_WEBHOOK_URL, json={"sisId": sis_id}, headers=headers, timeout=75
-        )
-        return resp.ok, None if resp.ok else f"advisor returned {resp.status_code}"
-    except requests.RequestException as exc:
-        return False, str(exc)
+
+    last_error = None
+    for attempt in range(2):
+        if attempt > 0:
+            time.sleep(5)
+        try:
+            resp = requests.post(
+                ADVISOR_WEBHOOK_URL, json={"sisId": sis_id}, headers=headers, timeout=75
+            )
+            if resp.ok:
+                return True, None
+            last_error = f"advisor returned {resp.status_code}"
+        except requests.RequestException as exc:
+            last_error = str(exc)
+    return False, last_error
 
 
 # --------------------------------------------------------------------------
