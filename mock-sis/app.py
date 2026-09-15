@@ -261,7 +261,7 @@ REGISTRAR_PAGE = """
   </style>
 </head>
 <body>
-  <h1>🏛️ Midwestern State University — Registrar Console</h1>
+  <h1>🏛️ Santa Clara University — Registrar Console (unofficial demo, not affiliated with SCU)</h1>
   <p class="muted">This is the mock system of record. Posting a grade here is what a
   registrar would do in Banner/PeopleSoft — it updates the student's official record and
   notifies any system subscribed to changes (here: the AI Course Advisor's webhook).</p>

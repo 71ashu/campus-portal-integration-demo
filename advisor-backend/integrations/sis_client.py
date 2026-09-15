@@ -70,10 +70,11 @@ def sync_catalog_and_program(program_id=None):
     program.minimum_gpa = program_payload.get("minimumGpa")
     program.requirements = {
         "catalog_year": program_payload.get("catalogYear", ""),
-        # This demo's catalog is single-department, so there's no need for
-        # the non-CSEN elective unit caps the standalone project's real
-        # Engineering Management catalog required.
-        "non_csen_elective_caps": {},
+        # Real MS-CSEN rule from SCU's Graduate Engineering Bulletin: at most
+        # 6 units of EMGT electives count toward the degree. services.py
+        # already has this cap logic (`non_csen_elective_caps`); it just had
+        # nothing real to enforce until the catalog carried real EMGT courses.
+        "non_csen_elective_caps": program_payload.get("nonCsenElectiveCaps", {}),
     }
 
     all_course_ids = set(program_payload.get("coreCourseIds", [])) | set(
@@ -87,11 +88,6 @@ def sync_catalog_and_program(program_id=None):
 
     db.session.commit()
     return program.program_id
-
-
-_CLASS_STANDING_TO_YEAR = {
-    "Freshman": "Freshman", "Sophomore": "Sophomore", "Junior": "Junior", "Senior": "Senior",
-}
 
 
 def sync_student(student, payload=None):
@@ -118,7 +114,7 @@ def sync_student(student, payload=None):
     program = Program.query.get(sis_student.get("programId"))
     student.name = sis_student.get("name", student.name)
     student.program_enrolled = program.program_name if program else student.program_enrolled
-    student.year = _CLASS_STANDING_TO_YEAR.get(sis_student.get("classStanding"), student.year)
+    student.year = sis_student.get("classStanding", student.year)
     student.program_gpa = sis_student.get("cumulativeGpa", student.program_gpa)
     student.sis_synced_at = datetime.utcnow()
     student.sis_unmet_requirements = audit.get("unmetRequirements", [])
@@ -176,9 +172,9 @@ def provision_student(sis_id):
 
     sis_student = payload["student"]
     student = Student(
-        email=f"{sis_id.lower()}@midwestern.example.edu",
+        email=f"{sis_id.lower()}@scu.example.edu",
         name=sis_student.get("name", sis_id),
-        university="Midwestern State University",
+        university="Santa Clara University",
         program_enrolled="",
         interests=[],
         career_goals="",

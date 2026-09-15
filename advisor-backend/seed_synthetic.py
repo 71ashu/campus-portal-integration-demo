@@ -88,10 +88,10 @@ def run_if_needed():
         base_gpa = random.uniform(2.6, 3.9)
         first, last = _FIRST_NAMES[i % len(_FIRST_NAMES)], _LAST_NAMES[i % len(_LAST_NAMES)]
         student = Student(
-            email=f"synthetic{i + 1}@midwestern.example.edu",
+            email=f"synthetic{i + 1}@scu.example.edu",
             name=f"{first} {last}",
-            university="Midwestern State University",
-            program_enrolled="BS Computer Science",
+            university="Santa Clara University",
+            program_enrolled="MS Computer Science and Engineering",
             year=random.choice(["Sophomore", "Junior", "Senior"]),
             interests=random.choice(_INTEREST_POOLS),
             career_goals=random.choice(_CAREER_POOLS),

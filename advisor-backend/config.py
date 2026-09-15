@@ -34,7 +34,7 @@ class Config:
 
     # --- Mock SIS integration ---
     SIS_BASE_URL = os.getenv('SIS_BASE_URL', 'http://localhost:5050').rstrip('/')
-    SIS_PROGRAM_ID = os.getenv('SIS_PROGRAM_ID', 'BS-CS-2024')
+    SIS_PROGRAM_ID = os.getenv('SIS_PROGRAM_ID', 'MS-CSEN')
     # Shared secret the mock SIS must present on the grade-posted webhook.
     # Left empty by default so the local demo runs unconfigured; set the same
     # value here and in mock-sis's SIS_WEBHOOK_TOKEN once this is deployed

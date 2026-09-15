@@ -1,14 +1,20 @@
 [
   {
-    "id": "BS-CS-2024",
-    "name": "BS Computer Science",
-    "degreeType": "Bachelor of Science",
-    "department": "Computer Science",
-    "catalogYear": "2024-2025",
-    "totalUnitsRequired": 120,
-    "minimumGpa": 2.0,
-    "coreCourseIds": ["CS101", "CS201", "CS331", "CS356", "MATH100", "MATH200", "MATH231", "ENG101"],
-    "electiveCourseIds": ["CS250", "CS301", "CS350", "PHY101"],
-    "minElectiveUnits": 9
+    "id": "MS-CSEN",
+    "name": "MS Computer Science and Engineering",
+    "degreeType": "Master of Science",
+    "department": "Computer Science and Engineering",
+    "catalogYear": "2026-2027",
+    "totalUnitsRequired": 46,
+    "minimumGpa": 3.0,
+    "coreCourseIds": ["CSEN 210", "CSEN 279", "CSEN 283"],
+    "electiveCourseIds": [
+      "AMTH 210", "AMTH 211", "AMTH 245", "AMTH 246", "AMTH 250",
+      "CSEN 233", "CSEN 240", "CSEN 281", "CSEN 313", "CSEN 342",
+      "CSEN 346", "CSEN 269", "CSEN 288",
+      "EMGT 330", "EMGT 373", "ENGR 245"
+    ],
+    "minElectiveUnits": 34,
+    "nonCsenElectiveCaps": { "EMGT": 6 }
   }
 ]

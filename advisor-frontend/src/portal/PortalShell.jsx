@@ -16,14 +16,21 @@ const NAV_ITEMS = [
  */
 export default function PortalShell({ studentName, onSignOut, children }) {
   return (
-    <div className="min-h-screen bg-slate-100">
-      <header className="bg-indigo-900 text-white">
+    // A fixed h-screen column with header/footer as shrink-0 and the app in
+    // a flex-1 middle band: the advisor tab sizes itself with h-screen
+    // internally (unmodified from the standalone project), which would
+    // otherwise overflow the viewport once a header and footer are stacked
+    // around it. min-h-0 on the middle band is what lets that inner
+    // h-screen content size against the *remaining* space instead of the
+    // full viewport.
+    <div className="h-screen flex flex-col bg-slate-100">
+      <header className="bg-indigo-900 text-white flex-shrink-0">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-6 min-w-0">
             <div className="flex items-center gap-2 flex-shrink-0">
               <GraduationCap className="w-5 h-5 text-amber-400" />
               <span className="font-bold text-sm tracking-tight hidden sm:inline">
-                Midwestern State University
+                Santa Clara University
               </span>
             </div>
             <nav className="hidden md:flex items-center gap-1" aria-label="Portal">
@@ -56,7 +63,14 @@ export default function PortalShell({ studentName, onSignOut, children }) {
           </div>
         </div>
       </header>
-      {children}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        {children}
+      </div>
+      <footer className="flex-shrink-0 px-4 py-2 text-center text-[11px] text-slate-400 border-t border-slate-200 bg-slate-100">
+        Unofficial personal/demo project. Not affiliated with, endorsed by, or
+        representing Santa Clara University. Course and program data are drawn
+        from SCU's public course bulletin for demonstration purposes only.
+      </footer>
     </div>
   );
 }

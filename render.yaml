@@ -33,7 +33,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: SIS_PROGRAM_ID
-        value: BS-CS-2024
+        value: MS-CSEN
       - key: SIS_BASE_URL
         sync: false # https://<campus-mock-sis>.onrender.com
       - key: SIS_WEBHOOK_TOKEN

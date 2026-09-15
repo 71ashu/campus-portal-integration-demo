@@ -11,9 +11,11 @@ resolved pragmatically during the build rather than left as open questions:
 SQLite (not Postgres) for the advisor's own database, an in-memory fixture-backed
 store (not a real DB) for the mock SIS, short polling + a real webhook instead of
 SSE for the "live" update (see the top-level README's "deliberately out of scope"
-section), and the demo's course codes (CS331/CS356/MATH231) replaced the
-illustrative ones this doc originally sketched. See the top-level
-[`README.md`](../README.md) for setup and the actual demo script.
+section), and the illustrative course codes this doc originally sketched
+(CS331/CS356/MATH231, "Midwestern State University") were later replaced with
+Santa Clara University's real MS-CSEN catalog and branding, plus a non-affiliation
+disclaimer — see the top-level [`README.md`](../README.md) for the current setup,
+the actual demo script, and that disclaimer's exact wording.
 
 ---
 

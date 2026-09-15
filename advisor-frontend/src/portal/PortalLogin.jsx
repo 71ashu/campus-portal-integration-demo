@@ -3,8 +3,8 @@ import { GraduationCap } from 'lucide-react';
 import { api } from '../api';
 
 const DEMO_STUDENTS = [
-  { sisId: 'M00412771', name: 'Jordan Rivera', note: 'Junior · mid-way through the CS core' },
-  { sisId: 'M00298841', name: 'Avery Chen', note: 'Sophomore · just getting started' },
+  { sisId: 'M00412771', name: 'Jordan Rivera', note: 'MS-CSEN, 2nd year · mid-way through the core' },
+  { sisId: 'M00298841', name: 'Avery Chen', note: 'MS-CSEN, 1st year · just getting started' },
 ];
 
 export default function PortalLogin({ onAuthenticated }) {
@@ -34,7 +34,7 @@ export default function PortalLogin({ onAuthenticated }) {
           <div className="w-14 h-14 rounded-2xl bg-indigo-900 flex items-center justify-center mb-3">
             <GraduationCap className="w-7 h-7 text-amber-400" />
           </div>
-          <h1 className="text-lg font-bold text-slate-900">Midwestern State University</h1>
+          <h1 className="text-lg font-bold text-slate-900">Santa Clara University</h1>
           <p className="text-sm text-slate-500">Student Portal</p>
         </div>
 
@@ -88,6 +88,12 @@ export default function PortalLogin({ onAuthenticated }) {
             ))}
           </div>
         </div>
+
+        <p className="text-[11px] text-slate-400 text-center mt-4 leading-snug">
+          Unofficial personal/demo project. Not affiliated with, endorsed by, or
+          representing Santa Clara University. Course and program data are drawn
+          from SCU's public course bulletin for demonstration purposes only.
+        </p>
       </div>
     </div>
   );

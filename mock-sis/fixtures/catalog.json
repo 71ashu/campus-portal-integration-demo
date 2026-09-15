@@ -1,122 +1,194 @@
 [
   {
-    "id": "CS101",
-    "name": "Introduction to Computer Science",
-    "units": 3,
-    "level": "Core",
-    "department": "Computer Science",
-    "description": "Fundamental concepts of computer science including programming basics, algorithms, and problem-solving.",
-    "prerequisites": [],
-    "topics": ["programming", "algorithms", "problem-solving"]
-  },
-  {
-    "id": "CS201",
-    "name": "Data Structures and Algorithms",
+    "id": "CSEN 210",
+    "name": "Computer Architecture",
     "units": 4,
-    "level": "Core",
-    "department": "Computer Science",
-    "description": "In-depth study of fundamental data structures and algorithms, and analysis of complexity.",
-    "prerequisites": ["CS101"],
-    "topics": ["data structures", "algorithms", "complexity analysis"]
-  },
-  {
-    "id": "CS250",
-    "name": "Database Systems",
-    "units": 3,
-    "level": "Elective",
-    "department": "Computer Science",
-    "description": "Database design, SQL, normalization, and transaction management.",
-    "prerequisites": ["CS201"],
-    "topics": ["databases", "SQL", "data management"]
-  },
-  {
-    "id": "CS301",
-    "name": "Machine Learning",
-    "units": 3,
-    "level": "Elective",
-    "department": "Computer Science",
-    "description": "Introduction to machine learning algorithms, supervised and unsupervised learning, neural networks.",
-    "prerequisites": ["CS201", "MATH200"],
-    "topics": ["machine learning", "neural networks", "AI"]
-  },
-  {
-    "id": "CS331",
-    "name": "Computer Networks",
-    "units": 3,
-    "level": "Core",
-    "department": "Computer Science",
-    "description": "Network architectures, protocols, routing, and distributed systems fundamentals.",
-    "prerequisites": ["CS201"],
-    "topics": ["networking", "systems", "distributed systems"]
-  },
-  {
-    "id": "CS350",
-    "name": "Web Development",
-    "units": 3,
-    "level": "Elective",
-    "department": "Computer Science",
-    "description": "Full-stack web development including HTML, CSS, JavaScript, and modern frameworks.",
-    "prerequisites": ["CS101"],
-    "topics": ["web development", "frontend", "backend"]
-  },
-  {
-    "id": "CS356",
-    "name": "Software Engineering",
-    "units": 3,
-    "level": "Core",
-    "department": "Computer Science",
-    "description": "Software design principles, team development practices, testing, and large-system architecture.",
-    "prerequisites": ["CS201", "CS331"],
-    "topics": ["software engineering", "systems design", "testing"]
-  },
-  {
-    "id": "MATH100",
-    "name": "Calculus I",
-    "units": 4,
-    "level": "Core",
-    "department": "Mathematics",
-    "description": "Limits, derivatives, and integrals of single-variable functions.",
+    "level": "Graduate Core",
+    "department": "Computer Science and Engineering",
+    "description": "Performance analysis, instruction set architecture, pipelining, memory hierarchy, cache, virtual memory, parallelism.",
     "prerequisites": [],
-    "topics": ["calculus", "mathematics"]
+    "topics": ["computer architecture", "systems"]
   },
   {
-    "id": "MATH200",
-    "name": "Linear Algebra",
-    "units": 3,
-    "level": "Core",
-    "department": "Mathematics",
-    "description": "Vectors, matrices, eigenvalues, and applications.",
-    "prerequisites": ["MATH100"],
+    "id": "CSEN 279",
+    "name": "Design and Analysis of Algorithms",
+    "units": 4,
+    "level": "Graduate Core",
+    "department": "Computer Science and Engineering",
+    "description": "Algorithm design strategies, complexity analysis, P vs NP. Also listed as AMTH 377.",
+    "prerequisites": [],
+    "alt_codes": ["AMTH 377"],
+    "topics": ["algorithms", "complexity analysis", "theory"]
+  },
+  {
+    "id": "CSEN 283",
+    "name": "Operating Systems",
+    "units": 4,
+    "level": "Graduate Core",
+    "department": "Computer Science and Engineering",
+    "description": "OS fundamentals, processes, memory management, I/O, file systems, security.",
+    "prerequisites": [],
+    "topics": ["operating systems", "systems"]
+  },
+  {
+    "id": "AMTH 210",
+    "name": "Probability I",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Applied Mathematics",
+    "description": "Definitions, sets, conditional and total probability, binomial distribution approximations, random variables, important probability distributions. Emphasis on discrete random variables.",
+    "prerequisites": [],
+    "topics": ["probability", "statistics", "mathematics"]
+  },
+  {
+    "id": "AMTH 211",
+    "name": "Probability II",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Applied Mathematics",
+    "description": "Continuation of AMTH 210. Study of continuous probability distributions, central limit theorem, parameter estimation.",
+    "prerequisites": ["AMTH 210"],
+    "topics": ["probability", "statistics", "mathematics"]
+  },
+  {
+    "id": "AMTH 245",
+    "name": "Linear Algebra I",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Applied Mathematics",
+    "description": "Vector spaces, transformations, matrices, characteristic value problems, canonical forms, and quadratic forms.",
+    "prerequisites": [],
     "topics": ["linear algebra", "mathematics"]
   },
   {
-    "id": "MATH231",
-    "name": "Probability & Statistics",
-    "units": 3,
-    "level": "Core",
-    "department": "Mathematics",
-    "description": "Probability theory, random variables, distributions, and statistical inference.",
-    "prerequisites": ["MATH100"],
-    "topics": ["statistics", "probability", "mathematics"]
+    "id": "AMTH 246",
+    "name": "Linear Algebra II",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Applied Mathematics",
+    "description": "Continuation of AMTH 245.",
+    "prerequisites": ["AMTH 245"],
+    "topics": ["linear algebra", "mathematics"]
   },
   {
-    "id": "ENG101",
-    "name": "English Composition",
-    "units": 3,
-    "level": "Core",
-    "department": "English",
-    "description": "Academic writing, research, and critical analysis.",
-    "prerequisites": [],
-    "topics": ["writing", "communication"]
-  },
-  {
-    "id": "PHY101",
-    "name": "Physics I",
+    "id": "AMTH 250",
+    "name": "Fundamental Mathematics for Artificial Intelligence",
     "units": 4,
-    "level": "Elective",
-    "department": "Physics",
-    "description": "Mechanics, thermodynamics, and waves.",
-    "prerequisites": ["MATH100"],
-    "topics": ["physics", "mechanics"]
+    "level": "Graduate",
+    "department": "Applied Mathematics",
+    "description": "Linear algebra, probability and statistics, and optimization for AI. Programming in Python.",
+    "prerequisites": [],
+    "topics": ["mathematics", "artificial intelligence", "optimization"]
+  },
+  {
+    "id": "CSEN 233",
+    "name": "Computer Networks",
+    "units": 4,
+    "level": "Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Network protocols, TCP/IP, routing, wireless networks, network security.",
+    "prerequisites": [],
+    "topics": ["networking", "systems", "distributed systems"]
+  },
+  {
+    "id": "CSEN 240",
+    "name": "Machine Learning",
+    "units": 4,
+    "level": "Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Machine learning theory, neural networks, gradient descent, implementation of ML algorithms.",
+    "prerequisites": ["AMTH 210", "AMTH 246", "CSEN 279"],
+    "topics": ["machine learning", "neural networks", "AI"]
+  },
+  {
+    "id": "CSEN 281",
+    "name": "Pattern Recognition and Data Mining",
+    "units": 4,
+    "level": "Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Data analytics methods, dimensionality reduction, classification, regression, clustering.",
+    "prerequisites": ["AMTH 210", "AMTH 245"],
+    "topics": ["data mining", "machine learning", "pattern recognition"]
+  },
+  {
+    "id": "CSEN 313",
+    "name": "Advanced Computer Architecture",
+    "units": 4,
+    "level": "Advanced Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Advanced system architectures, instruction-level parallelism, multiprocessor configurations.",
+    "prerequisites": ["CSEN 210"],
+    "topics": ["computer architecture", "systems", "parallelism"]
+  },
+  {
+    "id": "CSEN 342",
+    "name": "Deep Learning",
+    "units": 4,
+    "level": "Advanced Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Deep neural networks, convolutional and recurrent networks, applications to vision and NLP.",
+    "prerequisites": ["CSEN 240"],
+    "topics": ["deep learning", "neural networks", "AI"]
+  },
+  {
+    "id": "CSEN 346",
+    "name": "Natural Language Processing",
+    "units": 4,
+    "level": "Advanced Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "NLP models and algorithms, text analysis, machine translation, large language models.",
+    "prerequisites": ["CSEN 240"],
+    "topics": ["nlp", "machine learning", "AI"]
+  },
+  {
+    "id": "CSEN 269",
+    "name": "Computing for Good: Project Design and Implementation",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Designing and implementing computing projects that address social good, in partnership with community organizations.",
+    "prerequisites": [],
+    "topics": ["computing for good", "social impact"]
+  },
+  {
+    "id": "CSEN 288",
+    "name": "Software Ethics",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Computer Science and Engineering",
+    "description": "Ethical issues in software engineering practice, including privacy, bias, and responsible design.",
+    "prerequisites": [],
+    "topics": ["software ethics", "responsible computing"]
+  },
+  {
+    "id": "EMGT 330",
+    "name": "Project Management Basics",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Engineering Management and Leadership",
+    "description": "Fundamental concepts in project management: triple constraints, project life cycle, scheduling, budgeting, and monitoring/controls.",
+    "prerequisites": [],
+    "topics": ["project management"]
+  },
+  {
+    "id": "EMGT 373",
+    "name": "Technology Entrepreneurship",
+    "units": 2,
+    "level": "Graduate",
+    "department": "Engineering Management and Leadership",
+    "description": "Moving from an idea to a profitable business, covering intellectual property, team formation, funding, and startup execution.",
+    "prerequisites": [],
+    "alt_codes": ["ENGR 373"],
+    "topics": ["entrepreneurship", "startups"]
+  },
+  {
+    "id": "ENGR 245",
+    "name": "Innovation, Entrepreneurship and the Evolution of Silicon Valley",
+    "units": 3,
+    "level": "Graduate",
+    "department": "School of Engineering (Interdisciplinary)",
+    "description": "The history and dynamics of Silicon Valley's innovation ecosystem and what drives entrepreneurial success.",
+    "prerequisites": [],
+    "topics": ["innovation", "entrepreneurship", "silicon valley"]
   }
 ]

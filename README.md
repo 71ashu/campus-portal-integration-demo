@@ -12,6 +12,13 @@ meant to unlock: [`docs/portal-integration-demo.md`](docs/portal-integration-dem
 **🔗 Live demo:** _TODO — add the deployed URL here after following [`DEPLOY.md`](DEPLOY.md)._
 Runs on Render's + Vercel's free tiers, so the first load may take ~30–60s to wake up.
 
+> **Not affiliated with Santa Clara University.** The catalog, program rules, and
+> university branding in this demo reference Santa Clara University's real MS in
+> Computer Science and Engineering (course numbers, titles, and the 6-unit EMGT
+> elective cap are sourced from its public Graduate Engineering Bulletin) to make
+> the "adapts to a real institution" claim concrete — this is an unofficial personal
+> project, not built, endorsed, or operated by SCU.
+
 ## What's here
 
 ```
@@ -41,7 +48,7 @@ now scores courses pulled from there instead.
 ```
  Portal (advisor-frontend)              Mock SIS (mock-sis)
  ┌─────────────────────────┐            ┌───────────────────────────┐
- │ MSU top bar + nav        │            │ course catalog + prereqs   │
+ │ SCU-styled top bar + nav │            │ course catalog + prereqs   │
  │  └ Course Planning       │            │ degree program + audit     │
  │     (the advisor app,    │            │ student academic history   │
  │      unmodified)         │            │                            │
@@ -111,21 +118,27 @@ no password, just a campus ID (that's the SSO story).
 
 ## Demo script (~2 minutes)
 
+Catalog is Santa Clara University's real MS in Computer Science and Engineering
+(MS-CSEN): three graduate core courses (Computer Architecture, Algorithms, Operating
+Systems), a math/ML elective track, and real EMGT/ENGR electives — including the
+program's actual "max 6 units of EMGT electives" rule.
+
 1. **Sign in.** At `http://localhost:5173`, click **Jordan Rivera · M00412771** on the
    portal login screen. Land on the Dashboard: GPA, credits, current courses, and
    program requirements — all labeled **"Synced from SIS · just now"**, not typed in
    anywhere.
-2. **Ask for recommendations.** Go to *Ask Advisor* → "What courses should I take next
-   semester?" The reply flags that *Software Engineering (CS356)* still needs a
-   prerequisite — Jordan is mid-way through *Computer Networks (CS331)*, not done yet.
+2. **Ask for recommendations.** Go to *Ask Advisor* → "What machine learning courses
+   should I take next?" *Machine Learning (CSEN 240)* shows up but locked — Jordan
+   has finished Probability I (AMTH 210) and Algorithms (CSEN 279), but is only
+   mid-way through *Linear Algebra II (AMTH 246)*, which CSEN 240 also requires.
 3. **Play registrar.** Open `http://localhost:5050/registrar/M00412771` in another tab.
-   Post a final grade: **A- in CS331**, then **D+ in MATH231**. Each post shows
-   "Advisor synced ✅" — that's the webhook firing.
+   Post a final grade: **A- in AMTH 246**, then **D+ in Operating Systems (CSEN 283)**.
+   Each post shows "Advisor synced ✅" — that's the webhook firing.
 4. **Watch it update.** Back on the portal tab, click **Refresh from SIS** (or wait
-   ~8s for the background poll). The assistant posts a new message: CS356 is now
-   eligible — *All prerequisites completed* — and jumps to the top; the GPA on the
-   Dashboard drops from 3.61 to 3.32; predicted-grade numbers on the other
-   recommendations shift down with it.
+   ~8s for the background poll). The assistant posts a new message: *Machine Learning
+   (CSEN 240)* is now eligible — *All prerequisites completed* — and jumps to the top;
+   the GPA on the Dashboard drops from 3.57 to 3.13; predicted-grade numbers on the
+   other recommendations shift down with it.
 5. **The punchline.** Nothing in `services.py` or `knowledge_graph.py` ran differently
    before and after step 4. The only thing that changed was the student's record in
    the SIS.
