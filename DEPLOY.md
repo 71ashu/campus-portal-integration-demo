@@ -37,7 +37,11 @@ by connecting to a GitHub repo.
 
 **Free-tier note:** Render's free web services spin down after 15 minutes of
 inactivity and take 30–60 seconds to wake up on the next request. The first
-load of a shared demo link may look like it's hanging — it isn't.
+load of a shared demo link may look like it's hanging — it isn't. This also
+affects the registrar's grade-posted webhook: if `campus-advisor-backend` is
+asleep, posting a grade in the Registrar console can take up to ~60s to show
+"Advisor synced ✅" while it wakes up. Visiting the portal URL once first
+(to wake the backend) before doing a registrar demo avoids the wait.
 
 ## 3. Deploy the frontend on Vercel
 

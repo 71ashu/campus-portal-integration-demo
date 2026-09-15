@@ -219,13 +219,21 @@ def post_grades(sis_id):
 
 def _notify_advisor(sis_id):
     """Best-effort push to the advisor so an open portal tab updates without
-    a manual sync. Never blocks the registrar action on the advisor being up."""
+    a manual sync. Never blocks the registrar action on the advisor being up.
+
+    Timeout is generous (not the usual few seconds) because on a free-tier
+    host (Render, etc.) the advisor service may be asleep after 15 minutes of
+    inactivity and take 30-60s to wake up on this very request. A short
+    timeout here would report "failed" even though the request completes and
+    the sync actually lands moments later — that mismatch is exactly what
+    happened during testing.
+    """
     headers = {"Content-Type": "application/json"}
     if SIS_WEBHOOK_TOKEN:
         headers["X-Webhook-Token"] = SIS_WEBHOOK_TOKEN
     try:
         resp = requests.post(
-            ADVISOR_WEBHOOK_URL, json={"sisId": sis_id}, headers=headers, timeout=3
+            ADVISOR_WEBHOOK_URL, json={"sisId": sis_id}, headers=headers, timeout=75
         )
         return resp.ok, None if resp.ok else f"advisor returned {resp.status_code}"
     except requests.RequestException as exc:
