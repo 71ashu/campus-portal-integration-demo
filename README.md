@@ -9,7 +9,7 @@ university-portal shell instead of being its own island.
 Design rationale, architecture decisions, and the interview talking points this is
 meant to unlock: [`docs/portal-integration-demo.md`](docs/portal-integration-demo.md).
 
-**🔗 Live demo:** _TODO — add the deployed URL here after following [`DEPLOY.md`](DEPLOY.md)._
+**🔗 Live demo:** https://campus-portal-integration-demo.vercel.app
 Runs on Render's + Vercel's free tiers, so the first load may take ~30–60s to wake up.
 
 > **Not affiliated with Santa Clara University.** The catalog, program rules, and
