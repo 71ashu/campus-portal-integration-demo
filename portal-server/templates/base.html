@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Student Portal{% endblock %} · Santa Clara University</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900 antialiased">
+  {% block body %}{% endblock %}
+</body>
+</html>
+
+{% macro grad_cap(cls) -%}
+<svg class="{{ cls }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+</svg>
+{%- endmacro %}
+
+{% macro disclaimer(cls) -%}
+<p class="{{ cls }}">
+  Unofficial personal/demo project. Not affiliated with, endorsed by, or representing
+  Santa Clara University. Course and program data are drawn from SCU's public course
+  bulletin for demonstration purposes only.
+</p>
+{%- endmacro %}

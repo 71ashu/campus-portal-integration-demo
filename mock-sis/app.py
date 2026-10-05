@@ -14,10 +14,13 @@ way a real registrar would in Banner. Posting a grade fires a best-effort
 webhook back to the advisor so its data stays in sync without a manual
 "Refresh" click.
 """
+import hashlib
+import hmac
 import json
 import os
 import threading
 import time
+import uuid
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,11 +34,31 @@ load_dotenv()
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
 
 ADVISOR_WEBHOOK_URL = os.getenv(
-    "ADVISOR_WEBHOOK_URL", "http://localhost:5000/api/webhooks/sis/grade-posted"
+    "ADVISOR_WEBHOOK_URL", "http://localhost:5000/api/webhooks/sis/scu/grade-posted"
 )
-SIS_WEBHOOK_TOKEN = os.getenv("SIS_WEBHOOK_TOKEN", "")
+# Shared secret for signing webhooks (HMAC-SHA256). Must match the advisor's
+# SCU_SIS_WEBHOOK_SECRET; the advisor rejects unsigned deliveries.
+SIS_WEBHOOK_SECRET = os.getenv("SIS_WEBHOOK_SECRET", "")
+# API keys issued to systems allowed to read student records, comma-separated.
+# A real SIS would use OAuth2 client credentials with per-client scopes.
+SIS_API_KEYS = {k.strip() for k in os.getenv("SIS_API_KEYS", "").split(",") if k.strip()}
 
 app = Flask(__name__)
+
+
+@app.before_request
+def _require_api_key():
+    """Every /sis/* read except the health check needs a known API key.
+    The Registrar console is this service's own UI, so it's left open."""
+    if not request.path.startswith("/sis/") or request.path == "/sis/health":
+        return None
+    if not SIS_API_KEYS:
+        return jsonify({"error": "SIS_API_KEYS is not configured"}), 503
+    header = request.headers.get("Authorization", "")
+    supplied = header[len("Bearer "):].strip() if header.startswith("Bearer ") else ""
+    if not any(hmac.compare_digest(supplied, key) for key in SIS_API_KEYS):
+        return jsonify({"error": "Invalid or missing API key"}), 401
+    return None
 
 _lock = threading.Lock()
 
@@ -142,7 +165,7 @@ def _progress_payload(student):
 
 
 # --------------------------------------------------------------------------
-# REST contract consumed by advisor-backend/integrations/sis_client.py
+# REST contract consumed by the advisor's integrations/sis_client.py
 # --------------------------------------------------------------------------
 
 @app.route("/sis/health")
@@ -229,19 +252,34 @@ def _notify_advisor(sis_id):
     infrastructure-level 5xx while the container is still booting, even well
     within a generous timeout — a plain long timeout doesn't fix that, only a
     retry does. One retry after a short pause is enough in practice.
+
+    The payload only names the student and the event — the advisor pulls the
+    actual record itself. Each attempt is signed fresh (the timestamp is part
+    of the signature); the eventId stays the same so retries are idempotent.
     """
-    headers = {"Content-Type": "application/json"}
-    if SIS_WEBHOOK_TOKEN:
-        headers["X-Webhook-Token"] = SIS_WEBHOOK_TOKEN
+    if not SIS_WEBHOOK_SECRET:
+        return False, "SIS_WEBHOOK_SECRET is not configured"
+
+    body = json.dumps({
+        "event": "grade.posted",
+        "eventId": str(uuid.uuid4()),
+        "sisId": sis_id,
+    }).encode()
 
     last_error = None
     for attempt in range(2):
         if attempt > 0:
             time.sleep(5)
+        timestamp = str(int(time.time()))
+        signature = hmac.new(
+            SIS_WEBHOOK_SECRET.encode(), f"{timestamp}.".encode() + body, hashlib.sha256,
+        ).hexdigest()
+        headers = {
+            "Content-Type": "application/json",
+            "X-SIS-Signature": f"t={timestamp},v1={signature}",
+        }
         try:
-            resp = requests.post(
-                ADVISOR_WEBHOOK_URL, json={"sisId": sis_id}, headers=headers, timeout=75
-            )
+            resp = requests.post(ADVISOR_WEBHOOK_URL, data=body, headers=headers, timeout=75)
             if resp.ok:
                 return True, None
             last_error = f"advisor returned {resp.status_code}"

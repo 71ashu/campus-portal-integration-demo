@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% from "base.html" import grad_cap, disclaimer %}
+{% block title %}Course Planning{% endblock %}
+{% block body %}
+<div class="h-screen flex flex-col">
+  <header class="bg-indigo-900 text-white flex-shrink-0">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-6 min-w-0">
+        <div class="flex items-center gap-2 flex-shrink-0">
+          {{ grad_cap("w-5 h-5 text-amber-400") }}
+          <span class="font-bold text-sm tracking-tight hidden sm:inline">Santa Clara University</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-1" aria-label="Portal">
+          {% for label in ["Home", "Registration", "Financial Aid", "Advising"] %}
+          <span title="{{ label }} (not part of this demo)"
+                class="px-3 py-1.5 rounded-md text-xs font-semibold text-indigo-300/70 cursor-default">{{ label }}</span>
+          {% endfor %}
+          <span class="px-3 py-1.5 rounded-md text-xs font-semibold bg-white/10 text-white">Course Planning</span>
+        </nav>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <span id="sync-status" class="text-[11px] text-indigo-300 hidden lg:inline"></span>
+        <span class="text-xs text-indigo-200 hidden sm:inline truncate max-w-[10rem]">{{ user.name }}</span>
+        <form id="logout-form" method="post" action="{{ url_for('logout') }}">
+          <button type="submit"
+                  class="text-xs font-semibold px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 transition-colors">
+            Sign out
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative flex-1 min-h-0 bg-[#0f0f1a]">
+    <div id="advisor-loading" class="absolute inset-0 flex items-center justify-center">
+      <div class="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+    {# The advisor is a separately deployed tool. The iframe starts at our own
+       /launch/advisor page, which POSTs a signed launch token to it. #}
+    <iframe id="advisor-frame"
+            title="AI Course Advisor"
+            src="{{ url_for('launch_advisor') }}"
+            class="relative w-full h-full border-0"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            referrerpolicy="strict-origin"></iframe>
+  </main>
+
+  <footer class="flex-shrink-0 px-4 py-2 text-center border-t border-slate-200 bg-slate-100">
+    {{ disclaimer("text-[11px] text-slate-400") }}
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var ADVISOR_ORIGINS = {{ advisor_origins | tojson }};
+    var ADVISOR_APP_ORIGIN = ADVISOR_ORIGINS[0];
+    var LAUNCH_URL = {{ url_for('launch_advisor') | tojson }};
+    var frame = document.getElementById('advisor-frame');
+    var loading = document.getElementById('advisor-loading');
+    var syncStatus = document.getElementById('sync-status');
+    var logoutForm = document.getElementById('logout-form');
+    var relaunchTimes = [];
+    var loggingOut = false;
+
+    function relaunch() {
+      // Guard against a launch loop if the advisor keeps rejecting us.
+      var now = Date.now();
+      relaunchTimes = relaunchTimes.filter(function (t) { return now - t < 60000; });
+      if (relaunchTimes.length >= 3) return;
+      relaunchTimes.push(now);
+      loading.classList.remove('hidden');
+      frame.src = LAUNCH_URL + '?t=' + now;
+    }
+
+    var signedOut = false;
+    function signOut() {
+      if (signedOut) return;
+      signedOut = true;
+      logoutForm.submit();
+    }
+
+    window.addEventListener('message', function (event) {
+      // Only trust messages from the advisor, and only from our iframe.
+      if (ADVISOR_ORIGINS.indexOf(event.origin) === -1) return;
+      if (event.source !== frame.contentWindow) return;
+      var msg = event.data || {};
+      switch (msg.type) {
+        case 'advisor:ready':
+          loading.classList.add('hidden');
+          break;
+        case 'advisor:session-expired':
+        case 'advisor:relaunch':
+          relaunch();
+          break;
+        case 'advisor:synced':
+          syncStatus.textContent = msg.syncedAt
+            ? 'Advisor synced with SIS ' + new Date(msg.syncedAt).toLocaleTimeString()
+            : '';
+          break;
+        case 'advisor:logged-out':
+          if (loggingOut) signOut();
+          break;
+      }
+    });
+
+    // Error pages from the advisor's API host never send 'ready'; reveal the frame anyway.
+    frame.addEventListener('load', function () {
+      setTimeout(function () { loading.classList.add('hidden'); }, 1500);
+    });
+
+    // Ask the advisor to revoke its session before the portal session ends.
+    // form.submit() doesn't fire this handler, so signOut() won't loop back here.
+    logoutForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (loggingOut) return;
+      loggingOut = true;
+      frame.contentWindow.postMessage({ type: 'portal:logout' }, ADVISOR_APP_ORIGIN);
+      setTimeout(signOut, 800);
+    });
+  })();
+</script>
+{% endblock %}

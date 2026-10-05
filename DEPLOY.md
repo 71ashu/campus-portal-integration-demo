@@ -1,5 +1,11 @@
 # Deploying the live demo
 
+> **Out of date.** These steps describe the earlier layout, where a copy of the
+> advisor lived in this repo (`advisor-backend/`, `advisor-frontend/`). The advisor
+> is now deployed from the AI-Course-Advisor repo and launched into the portal's
+> iframe, and [`render.yaml`](render.yaml) now deploys only `mock-sis` and
+> `portal-server`. The steps below still need rewriting and testing for that layout.
+
 Three services, deployed in this order because two of them need each other's URL:
 
 1. **mock-sis** → Render web service
